@@ -106,4 +106,4 @@ python -m unittest discover -s tests
 | 在线演示 | 已发布（交互版） |
 | 真实 MCP 调用 | **已完成**：北京建外SOHO店，27 个真实单品，官方算价复核差额 ¥0.00（见 `data/`） |
 | GitHub 仓库 | **已推送**：https://github.com/liaojl18340/mcd-catering-ledger（公开，默认分支 main） |
-| 报名 Issue | **未提交，卡在第 4 步** |
+| 报名 Issue | **已提交**：[#1039](https://github.com/M-China/mcd-developer-innovation-challenge/issues/1039)（状态 open，提交账号 liaojl18340） |
