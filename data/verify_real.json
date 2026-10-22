@@ -1,0 +1,58 @@
+{
+  "store": {
+    "storeCode": "1950564",
+    "storeName": "麦当劳北京建外SOHO(A座)餐厅",
+    "address": "东三环中路39号院建外SOHO-A座",
+    "city": "北京"
+  },
+  "items": [
+    {
+      "productCode": "1450",
+      "quantity": 47
+    },
+    {
+      "productCode": "515837",
+      "quantity": 47
+    },
+    {
+      "productCode": "515520",
+      "quantity": 47
+    }
+  ],
+  "local_total_cents": 157450,
+  "official_total_cents": 157450,
+  "diff_cents": 0,
+  "consistent": true,
+  "split_limit": 99,
+  "order_count": 2,
+  "orders": [
+    {
+      "items": [
+        {
+          "productCode": "1450",
+          "quantity": 47
+        },
+        {
+          "productCode": "515837",
+          "quantity": 47
+        },
+        {
+          "productCode": "515520",
+          "quantity": 5
+        }
+      ],
+      "qty": 99,
+      "price_cents": 109150
+    },
+    {
+      "items": [
+        {
+          "productCode": "515520",
+          "quantity": 42
+        }
+      ],
+      "qty": 42,
+      "price_cents": 48300
+    }
+  ]
+}

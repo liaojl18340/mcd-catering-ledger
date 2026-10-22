@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麦麦团餐台账 · 真实菜单版</title>
+<style>
+  :root{
+    --ink:#191919; --sub:#6d6a66; --line:#e7e2da; --bg:#f5f2ec;
+    --card:#fffdfa; --accent:#c8102e; --accent-2:#ffe9ec;
+    --ok-bg:#eef7ee; --ok-ink:#2c6b31; --ok-line:#cfe4d1;
+    --warn-bg:#fdf3e3; --warn-ink:#a5650a; --warn-line:#f0dcb8;
+    --shadow:0 1px 2px rgba(25,25,25,.05),0 8px 24px rgba(25,25,25,.04);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:
+      radial-gradient(1200px 500px at 12% -10%, #fff 0%, rgba(255,255,255,0) 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 72px;}
+  header.top{padding:6px 0 18px;border-bottom:3px solid var(--ink);margin-bottom:22px;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  h1{font-size:25px;margin:0 0 4px;letter-spacing:-.5px;}
+  .sub{color:var(--sub);font-size:13px;}
+  .banner{background:var(--accent-2);color:#8c1226;border:1px solid #f3ccd3;border-radius:8px;
+    padding:7px 12px;font-size:12px;margin-bottom:18px;display:flex;gap:8px;align-items:center;}
+  .banner b{font-weight:600;}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:start;}
+  @media (max-width:860px){ .layout{grid-template-columns:1fr;} }
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;box-shadow:var(--shadow);margin-bottom:16px;}
+  .card h2{font-size:14px;margin:0 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);
+    letter-spacing:.3px;display:flex;justify-content:space-between;align-items:center;}
+  .card h2 small{font-weight:400;color:var(--sub);font-size:11px;letter-spacing:0;}
+
+  /* ---- controls ---- */
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .field label{font-size:12px;color:var(--sub);font-weight:600;}
+  .field .val{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin:0;cursor:pointer;}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;background:#ece7df;border-radius:999px;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--accent);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);margin-top:-6px;}
+  input[type=range]::-moz-range-track{height:6px;background:#ece7df;border-radius:999px;}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border:2px solid #fff;border-radius:50%;background:var(--accent);}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+  .chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);
+    background:#fbf9f5;color:#4a4641;cursor:pointer;user-select:none;transition:all .15s;}
+  .chip:hover{border-color:#cfc7bb;}
+  .chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
+  .switches{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:#4a4641;}
+  .switches label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;}
+
+  /* ---- result ---- */
+  .badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .badge.ok{background:var(--ok-bg);color:var(--ok-ink);border:1px solid var(--ok-line);}
+  .badge.warn{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line);}
+  .plan{font-size:17px;font-weight:650;margin:0 0 14px;word-break:break-word;line-height:1.5;}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;}
+  .stat{background:#faf8f4;border:1px solid var(--line);border-radius:10px;padding:9px 11px;}
+  .stat .k{display:block;font-size:11px;color:var(--sub);}
+  .stat .v{display:block;font-size:17px;font-weight:650;margin-top:1px;font-variant-numeric:tabular-nums;}
+  .bar{height:8px;background:#eee9e1;border-radius:999px;overflow:hidden;margin-top:16px;position:relative;}
+  .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .45s cubic-bezier(.22,.8,.28,1);}
+  .bar.over i{background:var(--warn-ink);}
+  .scale{display:flex;justify-content:space-between;font-size:10px;color:var(--sub);margin-top:5px;}
+  ul.reasons{margin:0;padding-left:17px;font-size:13px;color:#3b3b3b;}
+  ul.reasons li{margin-bottom:6px;}
+  ul.reasons li:last-child{margin-bottom:0;}
+
+  table.grid{width:100%;border-collapse:collapse;font-size:13px;}
+  table.grid th,table.grid td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;}
+  table.grid th{font-size:11.5px;color:var(--sub);font-weight:600;background:#faf8f4;}
+  table.grid td.num{font-variant-numeric:tabular-nums;}
+  table.grid tbody tr:hover{background:#fcfaf6;}
+  table.grid tr.active{background:var(--accent-2);}
+  .table-wrap{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:10px;}
+  .table-wrap table.grid th{position:sticky;top:0;z-index:1;}
+  .tip{font-size:12px;color:var(--sub);margin:10px 0 0;}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+  button.act{font:inherit;font-size:13px;padding:9px 16px;border-radius:9px;cursor:pointer;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;transition:opacity .15s;}
+  button.act:hover{opacity:.86;}
+  button.act.ghost{background:transparent;color:var(--ink);}
+  details.rules{margin-top:2px;}
+  details.rules summary{font-size:12px;color:var(--sub);cursor:pointer;outline:none;}
+  details.rules p,details.rules li{font-size:12px;color:#4a4641;}
+  details.rules ul{margin:8px 0 0;padding-left:18px;}
+  footer{margin-top:22px;font-size:11px;color:var(--sub);line-height:1.8;}
+  .empty{padding:28px 4px;text-align:center;color:var(--sub);font-size:13px;}
+  @media print{
+    body{background:#fff;}
+    .layout{grid-template-columns:1fr;}
+    .no-print{display:none !important;}
+    .card{box-shadow:none;break-inside:avoid;}
+    .table-wrap{max-height:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>麦麦团餐台账</h1>
+      <div class="sub">团餐预算求解与分摊台账 · 真实菜单 · 参数改动即时重算</div>
+    </div>
+    <div class="sub no-print">拖动任一参数，右侧结果、备选与台账同步刷新</div>
+  </header>
+
+  <div class="banner"><b>真实数据</b><span>菜单与价格取自麦当劳 MCP（麦当劳北京建外SOHO(A座)餐厅，storeCode 1950564，服务器时间 2026-10-22 15:03:41），共 27 个单品；价格未含门店阶梯优惠，最终以官方算价为准。</span></div>
+
+  <div class="layout">
+    <!-- 左：参数 -->
+    <div class="no-print">
+      <section class="card">
+        <h2>参数<small>改动即重算</small></h2>
+
+        <div class="field">
+          <div class="row"><label for="people">人数</label><span class="val" id="peopleVal">47 人</span></div>
+          <input type="range" id="people" min="3" max="200" step="1" value="47">
+        </div>
+
+        <div class="field">
+          <div class="row"><label for="budget">人均预算</label><span class="val" id="budgetVal">¥40.00</span></div>
+          <input type="range" id="budget" min="15" max="90" step="1" value="40">
+        </div>
+
+        <div class="field">
+          <div class="row"><label for="kcal">目标人均热量</label><span class="val" id="kcalVal">700 kcal</span></div>
+          <input type="range" id="kcal" min="300" max="1100" step="50" value="700">
+        </div>
+
+        <div class="field">
+          <div class="row"><label>忌口（按全组并集过滤）</label><span class="val" id="avoidCount">0 项</span></div>
+          <div class="chips" id="chips"></div>
+        </div>
+
+        <div class="field">
+          <div class="row"><label>槽位开关</label></div>
+          <div class="switches">
+            <label><input type="checkbox" id="allowSide" checked>允许配餐</label>
+            <label><input type="checkbox" id="allowDrink" checked>允许饮品</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>计算规则</h2>
+        <details class="rules" open>
+          <summary>加权得分与排序</summary>
+          <ul>
+            <li>热量贴合 40%：<code>1 − |人均热量 − 目标| / 目标</code></li>
+            <li>品类覆盖 30%：主食/配餐/饮品覆盖数 ÷ 3</li>
+            <li>预算余量 30%：余量达 15% 即封顶，顶格花完不加分</li>
+            <li>排序：得分降序 → 总价升序 → 餐品编码字典序</li>
+            <li>预算内无解时输出最省组合与差额，不标「推荐」</li>
+          </ul>
+        </details>
+      </section>
+    </div>
+
+    <!-- 右：结果 -->
+    <div>
+      <section class="card">
+        <h2>推荐配比<small id="comboCount"></small></h2>
+        <span class="badge ok" id="badge">预算内可行</span>
+        <p class="plan" id="planText">—</p>
+        <div class="stats">
+          <div class="stat"><span class="k">总价</span><span class="v" id="sTotal">—</span></div>
+          <div class="stat"><span class="k">人均</span><span class="v" id="sPer">—</span></div>
+          <div class="stat"><span class="k">预算占用</span><span class="v" id="sUtil">—</span></div>
+          <div class="stat"><span class="k">人均热量</span><span class="v" id="sKcal">—</span></div>
+          <div class="stat"><span class="k">剩余预算</span><span class="v" id="sLeft">—</span></div>
+        </div>
+        <div class="bar" id="bar"><i id="barFill"></i></div>
+        <div class="scale"><span>¥0</span><span id="scaleMax">预算 ¥0.00</span></div>
+      </section>
+
+      <section class="card">
+        <h2>决策依据</h2>
+        <ul class="reasons" id="reasons"></ul>
+      </section>
+
+      <section class="card">
+        <h2>备选方案<small>点击切换主方案</small></h2>
+        <div class="table-wrap" style="max-height:none;border:none;">
+          <table class="grid" id="altTable">
+            <thead><tr><th>#</th><th>每人配比</th><th>总价</th><th>人均</th><th>人均热量</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>分摊台账<small id="ledgerCount"></small></h2>
+        <div class="table-wrap">
+          <table class="grid" id="ledgerTable">
+            <thead><tr><th>序号</th><th>姓名</th><th>套餐组合</th><th>应付金额(元)</th><th>忌口备注</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="tip" id="ledgerTip"></p>
+        <div class="btns no-print">
+          <button class="act" id="btnCsv">导出 CSV 台账</button>
+          <button class="act ghost" id="btnPrint">打印 / 存 PDF</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    本页为「麦麦团餐台账 mcd-catering-ledger」的交互演示，是麦当劳程序员创意开发大赛参赛作品，非麦当劳官方产品。<br>
+    页内计算在浏览器本地完成，不上传任何数据；餐品、价格、可售状态与优惠以麦当劳官方渠道实时结果为准。
+  </footer>
+</div>
+
+<script>
+/* ============ 1. 菜单数据（演示值；真实运行由 MCP 取数后替换本数组） ============ */
+var MENU = [
+  {code:"3757",name:"纯悦",cat:"drink",price:750,kcal:0,tags:[]},
+  {code:"520689",name:"小杯鲜萃咖啡",cat:"drink",price:950,kcal:15,tags:["caffeine"]},
+  {code:"515280",name:"阳光柠檬红茶小杯",cat:"drink",price:950,kcal:85,tags:["caffeine"]},
+  {code:"515520",name:"中杯怡泉+C",cat:"drink",price:1150,kcal:110,tags:[]},
+  {code:"3505",name:"锡兰红茶",cat:"drink",price:1150,kcal:2,tags:["caffeine"]},
+  {code:"2430",name:"【美汁源】“黄金橙橙”",cat:"drink",price:1300,kcal:165,tags:[]},
+  {code:"514851",name:"咖啡阿芙佳朵",cat:"drink",price:1500,kcal:139,tags:["caffeine"]},
+  {code:"507389",name:"浓缩咖啡",cat:"drink",price:1500,kcal:13,tags:["caffeine"]},
+  {code:"511186",name:"热牛奶小杯",cat:"drink",price:1500,kcal:147,tags:["dairy"]},
+  {code:"510488",name:"热燕麦奶中杯",cat:"drink",price:2100,kcal:157,tags:[]},
+  {code:"510479",name:"冰燕麦奶铁中杯",cat:"drink",price:2300,kcal:132,tags:["caffeine","dairy"]},
+  {code:"1450",name:"麦香鸡",cat:"main",price:1700,kcal:369,tags:["chicken"]},
+  {code:"1440",name:"麦辣鸡腿汉堡",cat:"main",price:2250,kcal:485,tags:["chicken","spicy"]},
+  {code:"1600",name:"麦香鱼",cat:"main",price:2250,kcal:325,tags:["fish"]},
+  {code:"1120",name:"双层吉士汉堡",cat:"main",price:2300,kcal:429,tags:["beef"]},
+  {code:"1406",name:"板烧鸡腿堡",cat:"main",price:2350,kcal:391,tags:["chicken"]},
+  {code:"9900003586",name:"双层深海鳕鱼堡",cat:"main",price:2400,kcal:485,tags:["fish"]},
+  {code:"1106",name:"培根蔬萃双层牛堡",cat:"main",price:2450,kcal:442,tags:["beef"]},
+  {code:"1100",name:"巨无霸",cat:"main",price:2550,kcal:513,tags:["beef"]},
+  {code:"4648",name:"不素之霸双层牛堡",cat:"main",price:2650,kcal:493,tags:["beef"]},
+  {code:"511782",name:"芝士安格斯厚牛堡",cat:"main",price:3150,kcal:696,tags:["beef"]},
+  {code:"511781",name:"培根安格斯厚牛堡",cat:"main",price:3450,kcal:707,tags:["beef"]},
+  {code:"515837",name:"圆筒冰淇淋",cat:"side",price:500,kcal:93,tags:[]},
+  {code:"4437",name:"小杯玉米杯",cat:"side",price:1300,kcal:53,tags:["vegetarian"]},
+  {code:"4810",name:"中薯条",cat:"side",price:1350,kcal:289,tags:["fried","vegetarian"]},
+  {code:"1401",name:"麦乐鸡5块",cat:"side",price:1400,kcal:213,tags:["chicken","fried"]},
+  {code:"520445",name:"薄皮焦香V翅",cat:"side",price:1600,kcal:192,tags:["chicken","fried"]}
+];
+
+var TAGS = [
+  ["beef","牛肉"],["pork","猪肉"],["chicken","鸡肉"],["fish","鱼肉"],["egg","蛋"],
+  ["dairy","乳制品"],["fried","油炸"],["spicy","辣"],["caffeine","咖啡因"],["vegetarian","素食"]
+];
+
+var W_KCAL = 0.40, W_COVERAGE = 0.30, W_BUDGET = 0.30, BUFFER_TARGET = 0.15;
+
+/* ============ 2. 求解内核（与 scripts/catering_plan.py 同规则） ============ */
+function allowed(item, avoidSet){
+  for (var i=0;i<item.tags.length;i++){ if (avoidSet.indexOf(item.tags[i]) > -1) return false; }
+  return true;
+}
+function qtyFor(item, people){
+  var share = item.share || 1;
+  return share <= 1 ? people : Math.ceil(people / share);
+}
+function score(combo, budgetTotal, targetKcal){
+  var kcalPP = combo.kcalTotal / combo.people;
+  var kcalFit = targetKcal > 0 ? Math.max(0, 1 - Math.abs(kcalPP - targetKcal) / targetKcal) : 1;
+  var util = budgetTotal ? combo.total / budgetTotal : 1;
+  var budgetFit = Math.max(0, Math.min(1, (1 - util) / BUFFER_TARGET));
+  var present = 1 + (combo.side ? 1 : 0) + (combo.drink ? 1 : 0);
+  var coverage = present / 3;
+  return {weighted: W_KCAL*kcalFit + W_COVERAGE*coverage + W_BUDGET*budgetFit,
+          kcalFit: kcalFit, budgetFit: budgetFit, coverage: coverage};
+}
+function cmpCode(a, b){
+  var ka = [a.main.code, a.side ? a.side.code : "", a.drink ? a.drink.code : ""];
+  var kb = [b.main.code, b.side ? b.side.code : "", b.drink ? b.drink.code : ""];
+  for (var i=0;i<3;i++){
+    if (ka[i] < kb[i]) return -1;
+    if (ka[i] > kb[i]) return 1;
+  }
+  return 0;
+}
+function solve(opts){
+  var people = opts.people, budgetPP = opts.budgetPP, avoid = opts.avoid, targetkcal = opts.targetKcal;
+  var allowSide = opts.allowSide, allowDrink = opts.allowDrink;
+  var avoidSet = avoid.slice();
+  var mains = MENU.filter(function(i){return i.cat==="main" && allowed(i,avoidSet);});
+  var sides = allowSide ? MENU.filter(function(i){return i.cat==="side" && allowed(i,avoidSet);}) : [];
+  var drinks = allowDrink ? MENU.filter(function(i){return i.cat==="drink" && allowed(i,avoidSet);}) : [];
+  var res = {people:people, budgetPP:budgetPP, budgetTotal:budgetPP*people, targetKcal:targetkcal,
+             avoid:avoid, feasible:false, overBudget:false, deficit:0, combo:null,
+             alternatives:[], reasons:[], scores:{}, candidates:0};
+  if (!mains.length){
+    res.reasons.push("排除忌口标签（" + (avoid.length ? avoid.map(function(t){return labelOf(t);}).join("、") : "无") + "）后，菜单中已无可用主食。");
+    return res;
+  }
+  var cands = [];
+  for (var mi=0; mi<mains.length; mi++){
+    var main = mains[mi], qm = qtyFor(main, people);
+    var sideOpts = sides.length ? sides.concat([null]) : [null];
+    var drinkOpts = drinks.length ? drinks.concat([null]) : [null];
+    for (var si=0; si<sideOpts.length; si++){
+      var side = sideOpts[si], qs = side ? qtyFor(side, people) : 0;
+      for (var di=0; di<drinkOpts.length; di++){
+        var drink = drinkOpts[di], qd = drink ? qtyFor(drink, people) : 0;
+        var total = main.price*qm, kcal = main.kcal*qm;
+        if (side){ total += side.price*qs; kcal += side.kcal*qs; }
+        if (drink){ total += drink.price*qd; kcal += drink.kcal*qd; }
+        var combo = {main:main, side:side, drink:drink, people:people,
+                     qm:qm, qs:qs, qd:qd, total:total, kcalTotal:kcal};
+        combo.metrics = score(combo, res.budgetTotal, targetkcal);
+        cands.push(combo);
+      }
+    }
+  }
+  res.candidates = cands.length;
+  cands.sort(function(a,b){
+    if (b.metrics.weighted !== a.metrics.weighted) return b.metrics.weighted - a.metrics.weighted;
+    if (a.total !== b.total) return a.total - b.total;
+    return cmpCode(a,b);
+  });
+  var affordable = cands.filter(function(c){ return c.total <= res.budgetTotal; });
+  if (affordable.length){
+    res.combo = affordable[0];
+    res.feasible = true;
+    res.alternatives = affordable.slice(1, 4);
+    res.scores = res.combo.metrics;
+    res.reasons.push("预算内共有 " + affordable.length + " 个可行组合（共枚举 " + cands.length + " 个），按「热量贴合 40% + 品类覆盖 30% + 预算余量 30%」加权取优；预算余量达 15% 即封顶，顶格花完不加分。");
+    if (!res.combo.side) res.reasons.push("配餐槽位为空：加入任一配餐都会突破人均预算。");
+    if (!res.combo.drink) res.reasons.push("饮品槽位为空：加入任一饮品都会突破人均预算。");
+    return res;
+  }
+  var cheapest = cands.slice().sort(function(a,b){
+    if (a.total !== b.total) return a.total - b.total;
+    return cmpCode(a,b);
+  })[0];
+  res.combo = cheapest;
+  res.overBudget = true;
+  res.deficit = cheapest.total - res.budgetTotal;
+  res.alternatives = cands.filter(function(c){return c.total > cheapest.total;}).sort(function(a,b){
+    if (a.total !== b.total) return a.total - b.total;
+    return cmpCode(a,b);
+  }).slice(0,3);
+  res.reasons.push("最省组合总价仍超出预算 " + yuan(res.deficit) + "，因此判定为不可行，不输出超预算方案。");
+  res.reasons.push("可选处置：上调人均预算、减少人数，或关闭配餐/饮品槽位后重新求解。");
+  return res;
+}
+
+/* ============ 3. 文案与格式化 ============ */
+function yuan(cents){ return "¥" + (cents/100).toFixed(2); }
+function labelOf(tag){
+  for (var i=0;i<TAGS.length;i++){ if (TAGS[i][0]===tag) return TAGS[i][1]; }
+  return tag;
+}
+function perPersonText(combo){
+  var parts = [combo.main.name];
+  if (combo.side) parts.push(combo.side.name + "（" + (combo.side.share>1 ? "每"+combo.side.share+"人1份" : "每人1份") + "）");
+  if (combo.drink) parts.push(combo.drink.name + "（" + (combo.drink.share>1 ? "每"+combo.drink.share+"人1份" : "每人1份") + "）");
+  return parts.join(" + ");
+}
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+/* ============ 4. 状态 ============ */
+var state = {people:47, budgetPP:4000, targetKcal:700, avoid:[], allowSide:true, allowDrink:true, picked:null};
+var current = null;   // {res, combo}
+
+/* ============ 5. 渲染 ============ */
+function render(){
+  var res = solve(state);
+  current = {res:res, combo: res.combo};
+  var combo = res.combo;
+
+  document.getElementById("comboCount").textContent = res.candidates ? "枚举 " + res.candidates + " 个候选" : "";
+
+  var badge = document.getElementById("badge");
+  if (!combo){
+    badge.className = "badge warn"; badge.textContent = "无可输出方案";
+  } else if (res.feasible){
+    var degraded = !combo.side || !combo.drink;
+    badge.className = "badge ok";
+    badge.textContent = degraded ? "预算内可行（部分槽位降级）" : "预算内可行";
+  } else {
+    badge.className = "badge warn"; badge.textContent = "预算不足 · 不可行";
+  }
+
+  document.getElementById("planText").textContent = combo ? perPersonText(combo) : "请放宽忌口或提高预算后重试";
+
+  if (combo){
+    var util = res.budgetTotal ? combo.total / res.budgetTotal : 0;
+    document.getElementById("sTotal").textContent = yuan(combo.total);
+    document.getElementById("sPer").textContent = yuan(Math.round(combo.total / res.people));
+    document.getElementById("sUtil").textContent = (util*100).toFixed(1) + "%";
+    document.getElementById("sKcal").textContent = Math.round(combo.kcalTotal / res.people) + "";
+    document.getElementById("sLeft").textContent = yuan(Math.max(0, res.budgetTotal - combo.total));
+    document.getElementById("scaleMax").textContent = "预算 " + yuan(res.budgetTotal);
+    var bar = document.getElementById("bar");
+    bar.classList.toggle("over", util > 1);
+    document.getElementById("barFill").style.width = Math.min(100, util*100).toFixed(1) + "%";
+  } else {
+    ["sTotal","sPer","sUtil","sKcal","sLeft"].forEach(function(id){ document.getElementById(id).textContent = "—"; });
+    document.getElementById("barFill").style.width = "0%";
+  }
+
+  document.getElementById("reasons").innerHTML = res.reasons.map(function(r){
+    return "<li>" + esc(r) + "</li>";
+  }).join("") || "<li>—</li>";
+
+  renderAlternatives(res);
+  renderLedger(res, combo);
+}
+
+function renderAlternatives(res){
+  var tbody = document.querySelector("#altTable tbody");
+  var rows = [];
+  if (res.combo) rows.push({combo:res.combo, main:true});
+  res.alternatives.forEach(function(c){ rows.push({combo:c, main:false}); });
+  if (!rows.length){ tbody.innerHTML = '<tr><td colspan="5" class="empty">暂无备选方案</td></tr>'; return; }
+  tbody.innerHTML = rows.map(function(r, idx){
+    var c = r.combo, isPick = state.picked === c.main.code + "|" + (c.side?c.side.code:"") + "|" + (c.drink?c.drink.code:"");
+    return '<tr class="' + (isPick || (r.main && !state.picked) ? "active" : "") + '" data-key="' + c.main.code + "|" + (c.side?c.side.code:"") + "|" + (c.drink?c.drink.code:"") + '">'
+      + '<td class="num">' + (idx+1) + '</td>'
+      + '<td>' + esc(perPersonText(c)) + '</td>'
+      + '<td class="num">' + yuan(c.total) + '</td>'
+      + '<td class="num">' + yuan(Math.round(c.total / c.people)) + '</td>'
+      + '<td class="num">' + Math.round(c.kcalTotal / c.people) + '</td>'
+      + '</tr>';
+  }).join("");
+  Array.prototype.forEach.call(tbody.querySelectorAll("tr[data-key]"), function(tr){
+    tr.style.cursor = "pointer";
+    tr.addEventListener("click", function(){
+      state.picked = tr.getAttribute("data-key");
+      var all = [res.combo].concat(res.alternatives).filter(Boolean);
+      for (var i=0;i<all.length;i++){
+        var c = all[i], k = c.main.code + "|" + (c.side?c.side.code:"") + "|" + (c.drink?c.drink.code:"");
+        if (k === state.picked){ current.combo = c; }
+      }
+      renderPickedOnly();
+    });
+  });
+}
+
+/* 选中备选后，只刷新主方案展示与台账，不动参数 */
+function renderPickedOnly(){
+  var c = current.combo;
+  if (!c) return;
+  var res = current.res;
+  document.getElementById("planText").textContent = perPersonText(c);
+  var util = res.budgetTotal ? c.total / res.budgetTotal : 0;
+  document.getElementById("sTotal").textContent = yuan(c.total);
+  document.getElementById("sPer").textContent = yuan(Math.round(c.total / c.people));
+  document.getElementById("sUtil").textContent = (util*100).toFixed(1) + "%";
+  document.getElementById("sKcal").textContent = Math.round(c.kcalTotal / c.people) + "";
+  document.getElementById("sLeft").textContent = yuan(Math.max(0, res.budgetTotal - c.total));
+  document.getElementById("bar").classList.toggle("over", util > 1);
+  document.getElementById("barFill").style.width = Math.min(100, util*100).toFixed(1) + "%";
+  document.getElementById("badge").className = "badge ok";
+  document.getElementById("badge").textContent = (c.side && c.drink) ? "预算内可行" : "预算内可行（部分槽位降级）";
+  renderAlternatives(res);
+  renderLedger(res, c);
+}
+
+function renderLedger(res, combo){
+  var tbody = document.querySelector("#ledgerTable tbody");
+  document.getElementById("ledgerCount").textContent = res.people + " 人";
+  if (!combo){ tbody.innerHTML = '<tr><td colspan="5" class="empty">无可分摊台账</td></tr>'; document.getElementById("ledgerTip").textContent = ""; return; }
+  var base = Math.floor(combo.total / res.people);
+  var rem = combo.total - base * res.people;
+  var html = [];
+  for (var i=0;i<res.people;i++){
+    var share = base + (i < rem ? 1 : 0);
+    html.push("<tr><td class='num'>" + (i+1) + "</td><td>员工" + String(i+1).padStart(2,"0") + "</td><td>"
+      + esc(perPersonText(combo)) + "</td><td class='num'>" + (share/100).toFixed(2) + "</td><td>"
+      + (state.avoid.length ? esc(state.avoid.map(labelOf).join("、")) : "") + "</td></tr>");
+  }
+  tbody.innerHTML = html.join("");
+  document.getElementById("ledgerTip").textContent = rem
+    ? "零头按分位补足：前 " + rem + " 位各多承担 1 分，台账合计与订单总价严格相等，可直接交财务报销。"
+    : "总价可被人数整除，每人应付一致；台账合计与订单总价严格相等，可直接交财务报销。";
+}
+
+/* ============ 6. 交互绑定 ============ */
+var chipsBox = document.getElementById("chips");
+TAGS.forEach(function(pair){
+  var b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.textContent = pair[1];
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", function(){
+    var on = b.getAttribute("aria-pressed") === "true";
+    b.setAttribute("aria-pressed", on ? "false" : "true");
+    var idx = state.avoid.indexOf(pair[0]);
+    if (on && idx > -1) state.avoid.splice(idx,1);
+    if (!on && idx === -1) state.avoid.push(pair[0]);
+    document.getElementById("avoidCount").textContent = state.avoid.length + " 项";
+    state.picked = null;
+    render();
+  });
+  chipsBox.appendChild(b);
+});
+
+document.getElementById("people").addEventListener("input", function(e){
+  state.people = parseInt(e.target.value, 10);
+  document.getElementById("peopleVal").textContent = state.people + " 人";
+  state.picked = null;
+  render();
+});
+document.getElementById("budget").addEventListener("input", function(e){
+  state.budgetPP = parseInt(e.target.value, 10) * 100;
+  document.getElementById("budgetVal").textContent = yuan(state.budgetPP);
+  state.picked = null;
+  render();
+});
+document.getElementById("kcal").addEventListener("input", function(e){
+  state.targetKcal = parseInt(e.target.value, 10);
+  document.getElementById("kcalVal").textContent = state.targetKcal + " kcal";
+  state.picked = null;
+  render();
+});
+document.getElementById("allowSide").addEventListener("change", function(e){
+  state.allowSide = e.target.checked; state.picked = null; render();
+});
+document.getElementById("allowDrink").addEventListener("change", function(e){
+  state.allowDrink = e.target.checked; state.picked = null; render();
+});
+
+document.getElementById("btnPrint").addEventListener("click", function(){ window.print(); });
+
+document.getElementById("btnCsv").addEventListener("click", function(){
+  var c = current.combo;
+  if (!c) return;
+  var res = current.res;
+  var base = Math.floor(c.total / res.people), rem = c.total - base * res.people;
+  var lines = ["序号,姓名,套餐组合,应付金额(元),忌口备注"];
+  for (var i=0;i<res.people;i++){
+    var share = base + (i < rem ? 1 : 0);
+    lines.push([i+1, "员工" + String(i+1).padStart(2,"0"), '"' + perPersonText(c) + '"',
+      (share/100).toFixed(2), state.avoid.map(labelOf).join("、")].join(","));
+  }
+  var blob = new Blob(["\uFEFF" + lines.join("\n")], {type:"text/csv;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "团餐台账_" + res.people + "人_" + yuan(c.total).replace("¥","") + "元.csv";
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+});
+
+/* ============ 7. 启动 ============ */
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "people": 47,
+  "budget_per_person_yuan": 40.0,
+  "budget_total_yuan": 1880.0,
+  "feasible": true,
+  "over_budget": false,
+  "deficit_yuan": 0.0,
+  "avoid_tags": [],
+  "plan": {
+    "combo": "麦香鸡 x47 + 圆筒冰淇淋 x47 + 中杯怡泉+C x47",
+    "per_person": "麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）",
+    "total_yuan": 1574.5,
+    "per_person_yuan": 33.5,
+    "utilization": 0.8375,
+    "kcal_per_person": 572.0,
+    "score": 0.9269
+  },
+  "reasons": [
+    "预算内共有 178 个可行组合，按「热量贴合 40% + 品类覆盖 30% + 预算余量 30%」加权取优；预算余量达到 15% 即封顶，顶格花完不加分。"
+  ]
+}

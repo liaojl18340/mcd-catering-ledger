@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "source": "麦当劳 MCP（https://mcp.mcd.cn）",
+    "server": {
+      "name": "mcd-mcp",
+      "version": "1.0.0"
+    },
+    "protocol": "2025-06-18",
+    "server_time": "2026-10-22 15:03:41",
+    "fetched_at_local": "2026-10-22 15:04:20",
+    "elapsed_seconds": 40.3,
+    "store": {
+      "storeCode": "1950564",
+      "storeName": "麦当劳北京建外SOHO(A座)餐厅",
+      "address": "东三环中路39号院建外SOHO-A座",
+      "city": "北京"
+    },
+    "be_type": 1,
+    "order_type": 1,
+    "counts": {
+      "categories": 15,
+      "detail_ok": 27,
+      "priced": 27,
+      "kcal_missing": 30,
+      "detail_failed": 0
+    },
+    "tools_used": [
+      "now-time-info",
+      "query-nearby-stores",
+      "query-meals",
+      "query-meal-detail",
+      "list-nutrition-foods",
+      "calculate-price"
+    ],
+    "note": "价格为该门店该时刻的真实可售价；热量取自官方营养数据表。"
+  },
+  "menu": [
+    {
+      "code": "3757",
+      "name": "纯悦",
+      "category": "drink",
+      "kcal": 0,
+      "tags": [],
+      "share_per": 1,
+      "unit_price_cents": 750
+    },
+    {
+      "code": "520689",
+      "name": "小杯鲜萃咖啡",
+      "category": "drink",
+      "kcal": 15,
+      "tags": [
+        "caffeine"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 950
+    },
+    {
+      "code": "515280",
+      "name": "阳光柠檬红茶小杯",
+      "category": "drink",
+      "kcal": 85,
+      "tags": [
+        "caffeine"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 950
+    },
+    {
+      "code": "515520",
+      "name": "中杯怡泉+C",
+      "category": "drink",
+      "kcal": 110,
+      "tags": [],
+      "share_per": 1,
+      "unit_price_cents": 1150
+    },
+    {
+      "code": "3505",
+      "name": "锡兰红茶",
+      "category": "drink",
+      "kcal": 2,
+      "tags": [
+        "caffeine"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1150
+    },
+    {
+      "code": "2430",
+      "name": "【美汁源】“黄金橙橙”",
+      "category": "drink",
+      "kcal": 165,
+      "tags": [],
+      "share_per": 1,
+      "unit_price_cents": 1300
+    },
+    {
+      "code": "514851",
+      "name": "咖啡阿芙佳朵",
+      "category": "drink",
+      "kcal": 139,
+      "tags": [
+        "caffeine"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1500
+    },
+    {
+      "code": "507389",
+      "name": "浓缩咖啡",
+      "category": "drink",
+      "kcal": 13,
+      "tags": [
+        "caffeine"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1500
+    },
+    {
+      "code": "511186",
+      "name": "热牛奶小杯",
+      "category": "drink",
+      "kcal": 147,
+      "tags": [
+        "dairy"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1500
+    },
+    {
+      "code": "510488",
+      "name": "热燕麦奶中杯",
+      "category": "drink",
+      "kcal": 157,
+      "tags": [],
+      "share_per": 1,
+      "unit_price_cents": 2100
+    },
+    {
+      "code": "510479",
+      "name": "冰燕麦奶铁中杯",
+      "category": "drink",
+      "kcal": 132,
+      "tags": [
+        "caffeine",
+        "dairy"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2300
+    },
+    {
+      "code": "1450",
+      "name": "麦香鸡",
+      "category": "main",
+      "kcal": 369,
+      "tags": [
+        "chicken"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1700
+    },
+    {
+      "code": "1440",
+      "name": "麦辣鸡腿汉堡",
+      "category": "main",
+      "kcal": 485,
+      "tags": [
+        "chicken",
+        "spicy"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2250
+    },
+    {
+      "code": "1600",
+      "name": "麦香鱼",
+      "category": "main",
+      "kcal": 325,
+      "tags": [
+        "fish"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2250
+    },
+    {
+      "code": "1120",
+      "name": "双层吉士汉堡",
+      "category": "main",
+      "kcal": 429,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2300
+    },
+    {
+      "code": "1406",
+      "name": "板烧鸡腿堡",
+      "category": "main",
+      "kcal": 391,
+      "tags": [
+        "chicken"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2350
+    },
+    {
+      "code": "9900003586",
+      "name": "双层深海鳕鱼堡",
+      "category": "main",
+      "kcal": 485,
+      "tags": [
+        "fish"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2400
+    },
+    {
+      "code": "1106",
+      "name": "培根蔬萃双层牛堡",
+      "category": "main",
+      "kcal": 442,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2450
+    },
+    {
+      "code": "1100",
+      "name": "巨无霸",
+      "category": "main",
+      "kcal": 513,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2550
+    },
+    {
+      "code": "4648",
+      "name": "不素之霸双层牛堡",
+      "category": "main",
+      "kcal": 493,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 2650
+    },
+    {
+      "code": "511782",
+      "name": "芝士安格斯厚牛堡",
+      "category": "main",
+      "kcal": 696,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 3150
+    },
+    {
+      "code": "511781",
+      "name": "培根安格斯厚牛堡",
+      "category": "main",
+      "kcal": 707,
+      "tags": [
+        "beef"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 3450
+    },
+    {
+      "code": "515837",
+      "name": "圆筒冰淇淋",
+      "category": "side",
+      "kcal": 93,
+      "tags": [],
+      "share_per": 1,
+      "unit_price_cents": 500
+    },
+    {
+      "code": "4437",
+      "name": "小杯玉米杯",
+      "category": "side",
+      "kcal": 53,
+      "tags": [
+        "vegetarian"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1300
+    },
+    {
+      "code": "4810",
+      "name": "中薯条",
+      "category": "side",
+      "kcal": 289,
+      "tags": [
+        "fried",
+        "vegetarian"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1350
+    },
+    {
+      "code": "1401",
+      "name": "麦乐鸡5块",
+      "category": "side",
+      "kcal": 213,
+      "tags": [
+        "chicken",
+        "fried"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1400
+    },
+    {
+      "code": "520445",
+      "name": "薄皮焦香V翅",
+      "category": "side",
+      "kcal": 192,
+      "tags": [
+        "chicken",
+        "fried"
+      ],
+      "share_per": 1,
+      "unit_price_cents": 1600
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麦麦团餐台账 · 真实菜单</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --sub:#6b6b6b; --line:#e6e2dc; --bg:#f6f4f0;
+    --card:#ffffff; --accent:#c8102e; --accent-soft:#fdeef0; --warn:#b26b00; --warn-soft:#fdf3e3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 64px;}
+  header{padding:8px 0 20px;border-bottom:3px solid var(--ink);margin-bottom:24px;}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.4px;}
+  .sub{color:var(--sub);font-size:13px;}
+  .banner{background:var(--accent-soft);color:#8c1226;border:1px solid #f3cdd4;
+    border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin-bottom:18px;}
+  h2{font-size:15px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    letter-spacing:.2px;}
+  .plan{font-size:17px;font-weight:600;margin:0 0 14px;word-break:break-word;}
+  .badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;
+    margin-bottom:16px;}
+  .badge.ok{background:#eef7ee;color:#2f6b33;border:1px solid #cfe6d0;}
+  .badge.warn{background:var(--warn-soft);color:var(--warn);border:1px solid #f0dcb8;}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;}
+  .stat{background:#faf9f7;border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .stat .k{display:block;font-size:11px;color:var(--sub);letter-spacing:.4px;}
+  .stat .v{display:block;font-size:18px;font-weight:600;margin-top:2px;}
+  .bar{height:8px;background:#eee9e2;border-radius:999px;overflow:hidden;margin-top:16px;}
+  .bar i{display:block;height:100%;background:var(--accent);width:83.8%;}
+  .table-wrap{overflow-x:auto;}
+  table.grid{width:100%;border-collapse:collapse;font-size:13px;}
+  table.grid th,table.grid td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;
+    white-space:nowrap;}
+  table.grid th{font-size:12px;color:var(--sub);font-weight:600;background:#faf9f7;}
+  table.grid td:first-child{color:var(--sub);}
+  ul.reasons{margin:0;padding-left:18px;font-size:13px;color:#3a3a3a;}
+  ul.reasons li{margin-bottom:6px;}
+  .tip{font-size:12px;color:var(--sub);margin:12px 0 0;}
+  footer{margin-top:26px;font-size:11px;color:var(--sub);line-height:1.7;}
+  @media print{
+    body{background:#fff;} .card{break-inside:avoid;box-shadow:none;}
+    .no-print{display:none;}
+  }
+  @media (max-width:600px){
+    h1{font-size:21px;} .wrap{padding:20px 14px 48px;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .plan{font-size:15px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>麦麦团餐台账 · 真实菜单</h1>
+    <div class="sub">麦当劳北京建外SOHO(A座)餐厅 · 47 人 · 人均 ¥40</div>
+  </header>
+  
+  <section class="card">
+    <h2>推荐配比</h2>
+    <span class="badge ok">预算内可行方案</span>
+    <p class="plan">麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</p>
+    <div class="stats"><div class="stat"><span class="k">人数</span><span class="v">47</span></div><div class="stat"><span class="k">总价</span><span class="v">¥1574.50</span></div><div class="stat"><span class="k">人均</span><span class="v">¥33.50</span></div><div class="stat"><span class="k">预算占用</span><span class="v">83.8%</span></div><div class="stat"><span class="k">人均热量</span><span class="v">572 kcal</span></div></div>
+    <div class="bar"><i></i></div>
+  </section>
+  <section class="card">
+    <h2>决策依据</h2>
+    <ul class="reasons"><li>预算内共有 178 个可行组合，按「热量贴合 40% + 品类覆盖 30% + 预算余量 30%」加权取优；预算余量达到 15% 即封顶，顶格花完不加分。</li></ul>
+  </section>
+  
+    <section class="card">
+      <h2>备选方案</h2>
+      <table class="grid">
+        <thead><tr><th>每人配比</th><th>总价</th><th>人均</th><th>人均热量(kcal)</th></tr></thead>
+        <tbody><tr><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 阳光柠檬红茶小杯（每人1份）</td><td>¥1480.50</td><td>¥31.50</td><td>547</td></tr><tr><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 【美汁源】“黄金橙橙”（每人1份）</td><td>¥1645.00</td><td>¥35.00</td><td>627</td></tr><tr><td>麦辣鸡腿汉堡 + 圆筒冰淇淋（每人1份） + 纯悦（每人1份）</td><td>¥1645.00</td><td>¥35.00</td><td>578</td></tr></tbody>
+      </table>
+    </section>
+  
+    <section class="card">
+      <h2>分摊台账（47 人）</h2>
+      <div class="table-wrap">
+        <table class="grid">
+          <thead><tr><th>序号</th><th>姓名</th><th>套餐组合</th><th>应付金额(元)</th><th>忌口备注</th></tr></thead>
+          <tbody><tr><td>1</td><td>员工01</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>2</td><td>员工02</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>3</td><td>员工03</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>4</td><td>员工04</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>5</td><td>员工05</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>6</td><td>员工06</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>7</td><td>员工07</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>8</td><td>员工08</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>9</td><td>员工09</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>10</td><td>员工10</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>11</td><td>员工11</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>12</td><td>员工12</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>13</td><td>员工13</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>14</td><td>员工14</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>15</td><td>员工15</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>16</td><td>员工16</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>17</td><td>员工17</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>18</td><td>员工18</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>19</td><td>员工19</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>20</td><td>员工20</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>21</td><td>员工21</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>22</td><td>员工22</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>23</td><td>员工23</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>24</td><td>员工24</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>25</td><td>员工25</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>26</td><td>员工26</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>27</td><td>员工27</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>28</td><td>员工28</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>29</td><td>员工29</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>30</td><td>员工30</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>31</td><td>员工31</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>32</td><td>员工32</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>33</td><td>员工33</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>34</td><td>员工34</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>35</td><td>员工35</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>36</td><td>员工36</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>37</td><td>员工37</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>38</td><td>员工38</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>39</td><td>员工39</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>40</td><td>员工40</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>41</td><td>员工41</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>42</td><td>员工42</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>43</td><td>员工43</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>44</td><td>员工44</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>45</td><td>员工45</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>46</td><td>员工46</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr><tr><td>47</td><td>员工47</td><td>麦香鸡 + 圆筒冰淇淋（每人1份） + 中杯怡泉+C（每人1份）</td><td>33.50</td><td></td></tr></tbody>
+        </table>
+      </div>
+      <p class="tip">总价可被人数整除，每人应付一致；台账合计与订单总价严格相等，可直接交财务报销。</p>
+    </section>
+  <footer>
+    本页由「麦麦团餐台账 mcd-catering-ledger」生成为麦当劳程序员创意开发大赛参赛作品，非麦当劳官方产品。<br>
+    输出仅供参考；餐品、价格、可售状态与优惠以麦当劳官方渠道实时结果为准。
+  </footer>
+</div>
+</body>
+</html>
