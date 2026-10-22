@@ -47,7 +47,7 @@ python scripts/preflight.py        # 先自检，必须 0 项失败
 git init -b main
 git add -A
 git commit -m "feat: 麦麦团餐台账 - 团餐预算求解与分摊台账"
-git remote add origin https://github.com/liaojunlin/mcd-catering-ledger.git
+git remote add origin https://github.com/liaojl18340/mcd-catering-ledger.git
 git push -u origin main
 ```
 
@@ -67,7 +67,7 @@ git push -u origin main
 ```text
 【参赛申请】
 项目名称：麦麦团餐台账（mcd-catering-ledger）
-项目地址：https://github.com/liaojunlin/mcd-catering-ledger
+项目地址：https://github.com/liaojl18340/mcd-catering-ledger
 项目简介：替全组点饭的人用的团餐决策与报销台账。在人均预算与全员忌口约束下求解可解释的配餐组合，并输出可直接交财务的分摊台账（CSV）与可打印台账卡片（HTML）。核心计算本地完成、零第三方依赖，取数走麦当劳 MCP，金额以官方算价复核。
 ```
 

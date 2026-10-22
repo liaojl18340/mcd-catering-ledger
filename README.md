@@ -60,7 +60,7 @@
 ### 3.1 安装
 
 ```bash
-git clone https://github.com/liaojunlin/mcd-catering-ledger.git mcd-catering-ledger
+git clone https://github.com/liaojl18340/mcd-catering-ledger.git mcd-catering-ledger
 cd mcd-catering-ledger
 # 无需 pip install：命令行只依赖 Python 标准库
 ```
